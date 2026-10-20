@@ -55,7 +55,7 @@ class Player:
 
 # --- INICIALIZACE HRY ---
 st.set_page_config(page_title="Slovní Domino", layout="wide")
-st.title("🔤 Slovní Domino v češtině")
+st.title("🔤 Slovní domino v češtině")
 
 if "game_initialized" not in st.session_state:
     st.session_state.deck = Deck()
@@ -69,12 +69,12 @@ if "game_initialized" not in st.session_state:
     initial_card = Card("běhat", "slovesa")
     st.session_state.board = [initial_card]
     st.session_state.turn = "player" # 'player' nebo 'ai'
-    st.session_state.message = "Hra začala! Na stole je slovo 'běhat'."
+    st.session_state.message = "Hra začala!"
     st.session_state.game_initialized = True
 
 # --- POSTranní panel: Stav balíčku a kniha ---
 with st.sidebar:
-    st.header("📚 Pytlík a Kniha")
+    st.header("📚 Lístky")
     st.write(An := f"Zbývá lístků v pytlíku: **{len(st.session_state.deck.cards)}**")
     
     if st.button("Vzít lístek z balíčku (+1 do ruky)"):
@@ -87,7 +87,7 @@ with st.sidebar:
             st.warning("Pytlík je prázdný!")
 
     st.divider()
-    st.subheader("Napsat nové slovo z knihy")
+    st.subheader("Vypsat nové slovo z knihy")
     book_word = st.text_input("Zadejte slovo nalezené v knize:")
     book_cat = st.selectbox("Kategorie slova:", list(CATEGORIES.keys()))
     if st.button("Přidat slovo z knihy do ruky"):
@@ -103,7 +103,7 @@ with col1:
 with col2:
     st.metric(label="🤖 Skóre stroje", value=st.session_state.ai.score)
 
-st.subheader("Aktuální řetězec na stole:")
+#st.subheader("Aktuální řetězec na stole:")
 board_display = " ➔ ".join([f"**{c.word}** *({c.color})*" for c in st.session_state.board])
 st.markdown(f"> {board_display}")
 
@@ -113,7 +113,7 @@ st.info(st.session_state.message)
 if st.session_state.turn == "player":
     st.subheader("Tvůj tah")
     last_card = st.session_state.board[-1]
-    st.write(An := f"Poslední slovo na stole je **{last_card.word}**. Můžeš přiložit slovo začínající/končící na písmeno, nebo stejný slovní druh.")
+   #st.write(An := f"Poslední slovo na stole je **{last_card.word}**. Můžeš přiložit slovo začínající/končící na písmeno, nebo stejný slovní druh.")
 
     # Výběr karty z ruky
     hand_options = {f"{c.word} ({c.color})" if not c.is_blank else "[Prázdný lístek]": i for i, c in enumerate(st.session_state.player.hand)}
